@@ -1,0 +1,662 @@
+Date:27/28 March 2019
+Dropbox link:
+https://www.dropbox.com/sh/k8a7cuq4y7xuuye/AABGU7uMI20qXAUKjBJ1BAdLa?dl=0
+
+Youtube tutorial by teacher:
+Cloudera Quickstart VM Installation | Cloudera Hadoop Installation | Cloudera Tutorial | Simplilearn:
+https://www.youtube.com/watch?v=HP4g2BU7-xU
+Hadoop Installation On Ubuntu 16.04 | Hadoop Installation On Virtualbox | Simplilearn
+https://www.youtube.com/watch?v=ZVbEykh87lw
+Hadoop Architecture | HDFS Architecture | Hadoop Architecture Tutorial | HDFS Tutorial | Simplilearn
+https://www.youtube.com/watch?v=CI0QkZYsLmw
+What is Big Data | What Is Hadoop and Big Data | Big Data Tutorial For Beginners
+https://www.youtube.com/watch?v=CKLzDWMsQGM&list=PLEiEAq2VkUUJqp1k-g5W1mo37urJQOdCZ
+
+HDFS Metadata Directories Explained:
+https://hortonworks.com/blog/hdfs-metadata-directories-explained/
+
+Data set:
+https://archive.ics.uci.edu/ml/datasets.php
+
+Movie Review Data:
+http://www.cs.cornell.edu/people/pabo/movie-review-data/
+
+
+Just to downlaod the data.
+https://archive.ics.uci.edu/ml/machine-learning-databases/reuters21578-mld/
+
+Step#1: Create directory in your local folder
+$>mkdir mylocalDir
+$>cd mylocalDir 
+$>cat >> test.txt
+$>cat test.txt
+
+
+Step#2:Create directory in HDFS
+$> hdfs dfs -mkdir rajhans
+
+Step#3: list all the directory on HDFS
+$>hdfs dfs -ls /
+
+Step#4: to list a specific directory
+$>hdfs dfs -ls /user/rajhanskumar468_gmail
+$>hdfs dfs -ls /user/rajhanskumar468_gmail | grep rajha
+
+Step#5: you have a file in your local directory and need to copy on HDFS some directory with default replication factor.
+$>hdfs dfs  -put mylocalDir* rajhans
+$>hdfs dfs -Ddfs.replication=3 -put mylocalDir* rajhans
+
+Step#6:to see the details of file and blocks with replication factor:
+$>hdfs fsck /user/rajhanskumar468_gmail/rajhans -files -blocks
+
+Step#7: set replication factor 4 for the existing file on HDFS
+$>hdfs dfs -setrep -R -w 4 rajhans
+
+Step#8:to see the details of file and blocks with replication factor:
+$>hdfs fsck /user/rajhanskumar468_gmail/rajhans -files -blocks
+
+Step#9:copy files from hdfs to local
+$>hdfs dfs -copyToLocal /user/rajhanskumar468_gmail/rajhans /home/rajhanskumar468_gmail/
+
+Step#10:remove a directory from HDFS
+$>hdfs dfs -rm -R rajhans
+
+Step#11:remove a directory from HDFS permanently
+$>hdfs dfs -rm -R -skipTrash rajhans
+
+Step#11:copy data from trash to local/hdfs
+$>hdfs dfs -cp /trashpath /desiredath
+
+Step#11:move data from trash to local/hdfs
+$>hdfs dfs -mv /trashpath /desiredpath
+
+
+=========================================
+4th May
+=========================================
+$:cat >> test.txt
+$:cat >> testFile.txt | grep "world"
+$:cat >> testFile.txt | grep "world" | wc -w
+$:cat >> testFile.txt | grep "world" | wc -l
+
+$:vi /etc/hadoop/conf/core-site
+$:vi /etc/hadoop/conf/hdfs-site 
+
+find all the config files:
+/opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop/etc
+
+https://mapr.com/blog/in-depth-look-hbase-architecture/
+
+https://hadoop.apache.org/docs/r2.7.7/hadoop-project-dist/hadoop-hdfs/HDFSHighAvailabilityWithNFS.html
+
+
+YARN = Yet Another Reourse Negotiator 
+
+from Ajay Singhal (Faculty) to All Participants:
+https://blog.cloudera.com/blog/2015/09/untangling-apache-hadoop-yarn-part-1/
+
+hadoop the definitive guide, 4th edition
+
+https://developer.yahoo.com/hadoop/tutorial/module4.html
+
+
+
+
+
+Map -> suffle -> reduce -> result=======
+===================================================================
+5th May
+/opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop/etc
+/opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop/etc
+
+$:hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount /user/ajaykuma24_gmail_com/abc100.txt mroutpu0505
+
+$:hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount /user/ajaykuma24_gmail_com/27thaprB2/abc100.txt mroutpu0505-2
+
+$:hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount -Dmapreduce.framework.name=local /user/ajaykuma24_gmail_com/27thaprB2/abc100.txt mroutpu0505-3
+
+
+$:hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount -Dmapreduce.framework.name=local /user/ajaykuma24_gmail_com/27thaprB2/abc100.txt mroutpu0505-3
+
+$:hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount -Dmapreduce.output.fileoutputformat.compress=true -Dmapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.i
+o.compress.GzipCodec /user/ajaykuma24_gmail_com/27thaprB2/abc100.txt mroutpu0505-4
+
+
+hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2
+.6.0-cdh5.14.0.jar wordcount -Dmapreduce.output.fileoutputformat.compress=true -Dmapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.i
+o.compress.Lz4Codec /user/ajaykuma24_gmail_com/27thaprB2 mroutpu0505-7
+
+$:cat /etc/hadoop/conf/core-site | grep compress
+
+
+/user/rajhanskumar468_gmail/rajhans/inputfile.txt
+
+hadoop jar /opt/cloudera/parcels/CDH-5.14.0-1.cdh5.14.0.p0.24/lib/hadoop-mapreduce/hadoop-mapreduce-examples-2.6.0-cdh5.14.0.jar wordcount /user/rajhanskumar468_gmail/rajhans/inputfile.txt rajoutput0505
+
+
+hadoop jar /home/rajhanskumar468_gmail/rajhansk/WordCount.jar WordCount /user/rajhanskumar468_gmail/rajhansk/inputfile.txt rajoutput0505
+
+======================================================================================================================
+11May
+https://techmagie.wordpress.com/category/big-data/data-formats/
+
+beeline
+hive - it is old way is doing it.
+spark2-shell
+!hdfs dfs -ls /user/hive/warehouse/databasename/tablename;
+
+
+load data local input 'resource/' into table tablename;
+
+
+create table mytab1 (id int, name string)row format delimited fields terminated by ',';
+
+!hdfs dfs -cp /user/
+
+#type hive to get Hive prompt
+$:hive
+#to list all database name
+$:show databases;
+
+#create database;
+$:create database rajhansdb;
+
+#to connect with rajhansdb
+$:use rajhansdb;
+
+#to create internal table
+$:create table emptab(empid int, empname string);
+
+#to see data location 
+$:hdfs dfs -ls /user/hive/warehouse/rajhansdb.db/emptab
+
+#
+hive.mapred.mode=strict;
+hive.mapred.mode=nonstrict;
+set hive.exec.dynamic.partition = true
+#For partition we have to set this property
+set hive.exec.dynamic.partition.mode = nonstrict
+
+
+
+12May:
+HCatalog is accessable via command and REST API.
+
+Partision table
+
+/user/rajhanskumar468_gmail
+
+/user/ajaykuma24_gmail_com
+hdfs dfs -ls /user/hive/warehouse/rajhansdb.db
+hdfs dfs -ls /user/hive/warehouse/rajhansdb.db
+alter table tab16 add partition (country="USA", city="NYC",doj="1stMay");  
+
+hive> create table tab20(name String,age int, id int) partitioned by(year int)                                                              
+    > row format delimited                                                                                                                  
+    > fields terminated by ','; 
+explode	
+
+#to run python script;
+hive -f hiveq3.hql
+
+database name = 11thmay2019
+select * from tbl12 where pref[2] = "sumsung";
+create table tbl120 
+create table tbl121 select explode(loc) from tbl12
+	
+add jar jarname.jar
+create temporary fucntion zodSign as 'package'
+jar -xvf MyUdf.jar to extract the jar	
+hive> create temporary fucntion zodiac as 'packagewith classname'
+
+hive>select name, zodic(bday) from table ...;
+=============================================================
+Date:18 MAY == SHIFT+CTRL+V
+=============
+catalog deamon = metadata;
+Impala deamon=>
+Impala: adhoc query engine which is very fast
+$: impala-shell -i 
+select count(*) from tbl1;
+
+invalidate metadata tbl1;
+invalildate metadata; =>will refresh all chache so you will get refresh data.
+it will not work directly to complex datatype. you need to store data in parky format.
+
+create table tbl1-impl(id int, name string) row format delimited fields terminated by ',';
+
+Hive =>show
+Impala =>faster adhoc query.
+Sqoop => structure data
+Flume => steaming data. continuous data feed. constanly getting generated.
+apachy95/storm/
+top/iostat/tail/
+tail - f /var/log/hadoop-cmf-hdfc-NFS
+netcat/kafka/syslog
+source->
+sink ->hbase/hdfc
+channel -> memory/file/jdbc
+config file - > file
+
+#option1
+vi flume-conf.properties
+chmod -R 777 flumeexec.sh
+vi flumeexec.sh -> script to not remember the command every time.
+run .flume/flumeexec.sh
+client (one more )
+curl telnet://10.0.0.1:9191
+
+option2
+vi my.conf
+vi flumeexec.sh
+.flume/flumeexec2.sh
+
+client 
+curl telnet://10.0.1.10:44441
+write message.
+
+option3
+vi flume-conf2.properties
+:wq
+kafka/nifi
+from Ajay Singhal (Faculty) to Host (privately):
+https://kafka.apache.org/quickstart
+from Ajay Singhal (Faculty) to Host (privately):
+https://nifi.apache.org/
+http://nosql-database.org/
+https://mapr.com/blog/in-depth-look-hbase-architecture/
+from Ajay Singhal (Faculty) to All Attendees:
+https://github.com/ajaykuma/MrApps.git
+from Ajay Singhal (Faculty) to All Attendees:
+https://github.com/ajaykuma/MrApps
+http://archive.cloudera.com/cdh5/cdh/5/hbase-0.98.6-cdh5.2.3/book/ops_mgt.html
+
+copy the jar to :home/rajhanskumar468_gmail/
+$:export HADOOP_CLASSPATH='hbase classpath'
+$:hadoop classpath
+$hadoop jar H.jar package_classname
+
+for windows:
+	download netcat-win32-1.11
+	server
+	nc.exe  -lvp 2222
+	client.
+	nc.exe localhost 2222
+
+
+another terminal
+hdfs dfs -get /common4all/flume .
+https://kafka.apache.org/quickstart
+https://nifi.apache.org/
+https://kafka.apache.org/quickstart
+https://nifi.apache.org/
+http://nosql-database.org/
+https://mapr.com/blog/in-depth-look-hbase-architecture/
+https://github.com/ajaykuma/MrApps.git
+https://github.com/ajaykuma/MrApps
+http://archive.cloudera.com/cdh5/cdh/5/hbase-0.98.6-cdh5.2.3/book/ops_mgt.html
+
+#############################
+19 MAY
+
+A = LOAD 'myfile'
+AS(x,y,z)
+B=FILTER A by x>0;
+D=FOREACH A
+
+http://blog.cloudera.com/blog/2013/04/demo-analyzing-data-with-hue-and-hive/
+http://gethue.com/hadoop-tutorials-ii-2-execute-hive-queries-and/
+http://blog.cloudera.com/blog/2013/08/demo-using-hue-to-access-hive-data-through-pig/
+http://gethue.com/hadoop-tutorials-ii-1-prepare-the-data-for-analysis/
+http://gethue.com/move-data-in-out-your-hadoop-cluster-with-the-sqoop/
+http://demo.gethue.com/beeswax/#query
+http://www.yelp.com/dataset_challenge
+https://github.com/romainr/hadoop-tutorials-examples
+from Ajay Singhal (Faculty) to All Attendees:
+
+https://github.com/romainr/hadoop-tutorials-examples
+https://github.com/romainr/hadoop-tutorials-examples
+
+grunt is the pig shell.
+$:pig
+grunt> pig -x local 
+
+quit
+again connect with pig
+grunt> cp /etc/passwd passwd.txt
+>cp /etc/passwd .
+>ls passwd.txt
+
+>A = load 'passwd.txt' using PigStorage(':');
+>A = load 'file:///home/rajhanskumar468_gmail/passwd.txt' using PigStorage(':');
+normal shel>hdfs dfs -put passwd.txt
+>dump A;
+>B = foreach A generate $0 as id;
+>dump B;
+>store B in 'id.out';
+
+hdfs dfs -get id.out
+cat id.out/part-m-00000 | head 20;
+
+A= load '/user/abc.txt'
+B= foreach A generate flatten (TOKENIZE ((chararray)$0)as word;
+C= group B by word;
+D = foreach C generate COUNT(B), group;
+dump D;
+
+SPARK
+https://blog.sicara.com/get-started-pyspark-jupyter-guide-tutorial-ae2fe84f594f
+$:spark-shell
+
+RDDs = > is a logical partition in memory.
+$:pyspark
+
+$spark2-shell
+$spark2-shell --master local
+=================================================================
+25th May
+Spartk => more powerfull 
+giraph => for graph processing..
+
+Limitation of MapReduce
+unsuitable with OLTP
+unfit for graph processing
+https://drive.google.com/open?id=1ORE3AR3SNPYtRiGBjf8zDbplq0KJzSCE
+https://0x0fff.com/spark-misconceptions/
+https://drive.google.com/open?id=0B98KHGgLEDjHUVZGcDhWdVJWWjg
+
+https://www.cloudera.com/about/training/certification/cca-spark.html
+
+cca175
+
+spark-shell - for scala 
+pyspark- for python.
+spark2-shell for spark version 2
+
+context variable as sc
+session variable as spark
+RDD =>
+Resilient =>if data in-memory 
+Distributed 
+Dataset
+
+DailyNotes
+var myrdd = sc.textFile("/DailyNotes.txt")
+
+$ var myrdd = sc.textFile("/user_rajhanskumar468_gmail/rajhans.time")
+$ myrdd.collect
+# each row is treated as one item in array.
+$ var myrdd = sc.textFile("/user/rajhanskumar468_gmail/rajhans/inputfile.txt")
+$ myrdd.collect
+$ murdd.count
+$ myrdd.take(3)
+$ myrdd.saveAsTextFile("testlocation")
+$ myrdd .
+$ val tanfrom = myrdd.map(x => x.toUpperCase)
+
+$ myrdd.map(x => x.toUpperCase).filter(x=>x.startsWith("A")).collect
+
+$va filterrdd = myerrdd.filter(x => x.startsWith("F"))
+$ filterrdd.collect
+$filterrdd.toDebugString
+#if this node will fail then debug information will move to the next node.
+#create function named function
+
+$def plusOne(i:int) = i+1
+$plusOne(10)
+
+$val myrdd = sc.parallelised(List(1,2,3,4,5))
+$myrdd.collect
+#calling function inside function
+$myrdd.map(x=> plusOne(x)).collect
+
+$(i:int) => i+1
+$res11(11) # //>
+
+var a=10
+print(a)
+
+val myrdd = sc.textFile("wordcount.txt")/wordcount.*/*.csv
+val myrdd = sc.wholeTextFiles("wordcount.txt")#directory only
+#key, value => key is filename and value is your file content
+murdd.values.collect
+myrdd.key.collect
+
+val list = List("tetem")
+val myrdd1= sc.parallelized(list)
+myrdd1.collect
+
+#Pair RDD and Double RDD
+myrdd.distict.collect
+myrdd.distinct.sortBy(x=> x, false) #false -desc/true -asc
+val mylist2= List("Kerala", "Gugarat", "Karnatak", "Maharastra", "Hariyana", "Goa", "JNK")
+val myrdd2 = sc.parallelised(mylist2)
+
+# combined
+myrdd.union(myrdd2).collect
+myrdd.intersection(myrdd2).collect
+myrdd.subtract(myrdd2).collect
+
+#making map as key value pair.first Rdd will be key and second one will be value.
+myrdd.zip(myrdd2)
+
+#join
+val salesprofit = sc.parallelize(Seq(("cadbury", "$3.5M"),("nestle", "$2.5M"),("mars", "$2.8M")))
+
+salesprofit.join(salesyear).collect
+
+============================================================================================
+26 May
+===============
+
+countByKey - action function.
+val pairdd = rdd.map(x => (x,1)) //converting rdd into pair rdd
+pairrdd.countByKey // return the key value pair
+pairrdd.groupByKey.collect
+
+pairrdd.sortByKey(true).collect // true is asc ,false means desc on key based.
+https://mvnrepository.com/artifact/org.apache.spark
+
+$spark-submit  --class package.class ScalaWC.jar wordcount.txt
+http://scala-ide.org/
+https://oozie.apache.org/
+3 types of resouce manager
+yarn
+standalone
+mesos
+
+$spark-submit  --class package.class --master yarn ScalaWC.jar wordcount.txt
+
+$spark-submit  --class package.class --master yarn --deploy-mode client ScalaWC.jar wordcount.txt
+
+$spark-submit  --class package.class --master yarn --deploy-mode cluster ScalaWC.jar wordcount.txt
+
+
+spark-submit  --class com.emirates.gws.model.common.Test C://Rajhans//BigData//lib//test.jar wordcount.txt
+
+https://github.com/sbt/sbteclipse
+
+val myrdd = sc.parallelised(1 to 100, 4) // 4 is number of partition
+myrdd.getNumParitions
+https://jaceklaskowski.gitbooks.io/mastering-apache-spark/spark-rdd-partitions.html
+
+myerrdd.repartition(5)
+
+val myrdd = sc.textFile()
+
+val myrdd1= // see word document.
+DAG = Directed Acyclic Graph
+>>Spark internally  create a DAG 
+
+By default right 2 partition.
+
+13 of july new batch
+$:history
+
+https://www.surveymonkey.com/r/Online_Classroom_Feedback
+========================================================
+1 JUNE:
+PageRank--- 
+Giraph is tool
+graphx - > it is a library.
+scala>import org.apache.spark.graphx
+9538561490 - vivek
+
+Machine Learning:
+Vector Feature: having value and direction 
+Samples:refers to items that must be processed.
+Feature Space: all the features/can numerial/can be physical.
+Labeled Data: refers to result data.
+
+import org.apache.spark.mllib;1.6
+import org.apache.spark.ml;2.X
+
+import org.apache.spark.sql.SparkSession;
+
+User Behaviour=>Data Ingestion => Data Clearing/transformation => Model training = > Model Testing = > Model Deployment and Integration.
+
+https://www.csie.ntu.edu.tw/~cjlin/libsvm/
+
+val mydfd = spark.read.format(csv).option("delimeter",";").load("D:\\banking.csv")
+val mydfd = spark.read.format("csv").option("delimeter",";").load("user//rajhanskumar468_gmail//project//banking.csv")
+val mydfd = spark.read.format("csv").option("delimeter",";").load("C://Rajhans//BigData//venkat Doc//Project//banking.csv")
+
+mydf.printSchema;
+
+mydf.filter($"martal" === "married").show
+
+=== means equal.
+
+>mydf.filter($"martal" === "married").filter($"balace" > 2000).show
+>mydf.filter($"martal" === "married").agg(max("balance"), avg("balace"), min("balance")).show
+
+>mydf.select.filter()
+>mydfd.select("age", "job").filter($"martial" === "married").count
+>mydfd.select("age", "job","matial").groupby("matial").count.show 
+>mydf.createOrReplace("banking")
+>sql("select matial , age, job, from bhupi where age > 50 and balace > 500").show
+>mydf.javaRDD;
+Reflation is static way of conversion
+Programatic way is dynamic way of conversion
+RDD + schema = dataframe
+www.kaggle.com
+search for spark Sql
+
+>mydf.schema
+val mydf = spark.read.format("csv").option("delimiter", ";").option("header","true").load("C://Rajhans//BigData//venkat Doc//Project//banking.csv")  
+column name
+column datatype
+nullable
+
+RDD is for unstructured
+DF for structured data
+
+>nc -l -p 
+
+
+====================================
+June 02
+====================================
+we have seen running on CLI, can you please demo how to use oozie with scala, I mean how to schedule the spark/scala job without human  intervention ....
+
+www.develper.twitter.com
+import scala.io.source;
+twitter4.core
+twitter4.streaming.
+
+https://zeppelin.apache.org/download.html
+
+Zepplin is a data analysis tool.
+zeppelin.eve.xml
+zeppelin.site.xml
+
+https://kafka.apache.org/downloads
+
+UDF need to read.
+Project:
+
+val mydf = spark.read.format("csv").option("delimeter", ";").option("header","true").load(/user/rajhanskumar468_gmail/project/banking.csv")
+mydf.registerTempTable("bankdetail")
+spark.sql("SELECT percentile_approx(balance, 0.5) as median, avg(balance) as average FROM bankdetail").show()
+
+
+spark.sql("SELECT age FROM bankdetail group by age").show()
+
+spark.sql("SELECT age, count(age) FROM bankdetail where y='yes' group by age order by count(age) desc limit 10").show()
+
+spark.sql("SELECT marital, count(marital) FROM bankdetail where y='yes' group by marital order by count(marital) desc limit 10").show()
+
+spark.sql("SELECT age, marital, count(1) FROM bankdetail group by age, marital order by count(1) desc ").show() 
+
+
+val mydf = spark.read.format("csv").option("delimiter", ";").option("header","true").load("/user/rajhanskumar468_gmail/project/banking.csv") 
+
+
+
+spark.sql("SELECT age, marital, count(marital), age  FROM bankdetail where y='yes' group by marital order by count(marital) desc limit 10").show()
+
+0-25 yung
+26- 50 medium
+51- above old
+
+val newdf = mydf.withColumn("age_cat",when($"age" < 26, "young").otherwise(when($"age" > 61, "old").otherwise("mid_age")))
+
+
+newdf.groupBy("age_cat," "y").count.sort("y").show
+
+
+
+
+
+
+
+
+
+
+
+=============================================================
+
+
+==================================================================================
+hdfs dfs -Ddfs.replication=3 -put abc* 27thaprB2
+
+hdfs fsck /user/ajaykuma24_gmail_com/27thaprB2 -files -blocks
+
+hdfs dfs -setrep -R -w 4 27thaprB
+
+
+hdfs fsck /user/rajhanskumar468_gmail/27thaprB -files -blocks
+
+hdfs dfs -cp 27thaprB2 27thaprBcpy
+
+hdfs dfs -copyToLocal /user/ajaykuma24_gmail_com/27thaprB /home/ajaykuma24_gmail_com/
+
+hdfs dfs -rm -R 27thaprBnew => everything is recursive.
+hdfs dfs -rm -R -skipTrash 27thaprBcpy
+hdfs dfs -cp /trashpath /desiredath
+hdfs dfs -mv /trashpath /desiredpath
+==============================================================================
+vi /etc/hadoop/conf/core-site.xml
+vi /etc/hadoop/conf/hdfs-site.xml
+
+==========================================
+
+
+hdfs dfs -get /common4all/flume .
+https://kafka.apache.org/quickstart
+https://nifi.apache.org/
+https://kafka.apache.org/quickstart
+https://nifi.apache.org/
+http://nosql-database.org/
+http://nosql-database.org/
+https://mapr.com/blog/in-depth-look-hbase-architecture/
+https://github.com/ajaykuma/MrApps.git
+https://github.com/ajaykuma/MrApps
+http://archive.cloudera.com/cdh5/cdh/5/hbase-0.98.6-cdh5.2.3/book/ops_mgt.html
+
+ok
