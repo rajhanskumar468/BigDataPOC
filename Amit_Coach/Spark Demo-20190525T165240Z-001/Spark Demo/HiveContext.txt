@@ -1,0 +1,8 @@
+import org.apache.spark.sql.hive.HiveContext
+val hiveContext = new HiveContext(sc)
+val drivers_table = hiveContext.sql("select * from 17sep2017.drivers");
+val timesheet_table = hiveContext.sql("select * from 17sep2017.timesheet");
+val common_attributes = Seq("driverid");
+val joined = drivers_table.join(timesheet_table, common_attributes)
+joined.take(1)
+joined.saveAsTable("17sep2017.outputData")

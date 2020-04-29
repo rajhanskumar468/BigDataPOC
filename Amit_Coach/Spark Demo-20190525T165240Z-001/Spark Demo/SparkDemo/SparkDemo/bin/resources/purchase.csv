@@ -1,0 +1,14 @@
+transaction_id,product_id,p_customer_id,sell_price,item_description
+1,1,1,30000,LED TV
+2,1,2,30000,LED TV
+3,1,3,30000,LED TV
+4,2,3,100,DVD
+5,2,8,100,DVD
+6,3,8,2000,XBOX ONE
+7,4,7,1000,Microwave 
+8,5,4,10000,Dishwasher
+9,6,5,15000,AC
+#,6,2,15000,AC
+#,3,11,2000,XBOX ONE
+#,2,10,100,DVD
+#,3,9,2000,XBOX ONE

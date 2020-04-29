@@ -1,0 +1,18 @@
+CloudLab
+
+val sqlcontext = new org.apache.spark.sql.SQLContext(sc)
+ val dfs = sqlcontext.read.json("employee.json")
+ dfs.printSchema()
+dfs.show()
+dfs.groupBy("age").count().show()
+dfs.filter(dfs("age")> 30).show
+dfs.select(dfs("name"),dfs("age")+ 10).show
+dfs.select("age").show()
+
+
+val sparkSession = SparkSession.builder().config("spark.sql.warehouse.dir", "file:///C:/Users/ELOPPTS/spark-warehouse").appName("test").master("local[*]").getOrCreate()
+  
+  val df = spark.read.json("employee.json")
+
+// Displays the content of the DataFrame to stdout
+df.show()

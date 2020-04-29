@@ -1,0 +1,106 @@
+spark-shell --master yarn-client --driver-cores 2
+
+Anonymous functions
+
+var anyFn =  (x: Int) => x + 1
+
+val double = (i: Int) => { i * 2 }
+
+double(2)
+
+Named Functions
+ def plusOne(i : Int) = i + 1
+
+Actions :
+
+val lines = sc.textFile("demoscala.txt")
+lines.count
+lines.take(2)
+lines.collect
+
+Map Example
+val lines = sc.textFile("demoscala.txt").map(line => line.toUpperCase()).saveAsTextFile("caps")
+
+Filter Example
+
+val lines = sc.textFile("demoscala.txt").map(line => line.toUpperCase()).filter(line => line.startsWith("H")).saveAsTextFile("filter")
+lines.toDebugString
+
+RDD parallelized Collections
+
+val data = Array(1, 2, 3, 4, 5)
+val distData = sc.parallelize(data)
+
+RDD wholeFiles
+
+
+val myfilerdd = sc.wholeTextFiles("*.txt")
+val keyrdd = myfilerdd.keys
+keyrdd.collect
+val filerdd = myfilerdd.values
+filerdd.collect
+
+Funcational Programming
+val data = Array(1, 2, 3, 4, 5)
+val distData = sc.parallelize(data)
+val newrdd = distData.map(x => plusOne(x))
+
+Count number of characters :
+
+val lines = sc.textFile("data.txt")
+val lineLengths = lines.map(s => s.length)
+val totalLength = lineLengths.reduce((a, b) => a + b)
+
+PairRDD creation
+val lines = sc.textFile("demoscala.txt").map(line => line.split(" ")).map(fields => (fields(0),fields(1),fields(3)))
+lines.collect().foreach(println)
+
+Word Count
+
+val textFile = sc.textFile("C:\\Cassandra\\Spark\\spark-2.0.0-bin-hadoop2.7\\bin\\demoscala.txt")
+val counts = textFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+counts.saveAsTextFile("WordCountSpark")
+
+CountByKey()
+
+val rdd = sc.parallelize(List("atlanta", "california", "florida", "hawaii", "texas", "atlanta", "florida", "hawaii"))
+rdd.map(k => (k,1)).countByKey
+rdd.map(k => (k,1)).groupByKey.collect
+
+Join in Spark
+
+val salesprofit = sc.parallelize(Seq(
+     |                ("cadbury", "$3.5M"),
+     |                ("nestle", "$2.5"),
+     |                ("mars", "$2.8")))
+	 
+val salesyear = sc.parallelize(Seq(
+     |                ("cadbury", "2017"),
+     |                ("nestle", "2017"),
+     |                ("mars", "2017")))
+
+
+salesprofit.join(salesyear).collect
+
+spark-submit --class org.apache.spark.examples.JavaSparkPi --master local --deploy-mode yarn-cluster --executor-memory 1g --name wordcount sparkdemo1.jar 4
+
+val rdd = sc.parallelize(List("atlanta", "california", "florida", "hawaii", "texas", "atlanta", "florida", "hawaii")) 
+def concatCountryName(iter: Iterator[Any]) = { println("USA : " + iter.next) }
+concatCountryName:(iter: Iterator)
+
+
+spark-submit --class org.apache.spark.examples.JavaWordCount --master local --deploy-mode client --executor-memory 1g --name wordcount sparkdemo.jar 4
+
+Lineage 
+
+val textFile = sc.textFile("C:\\Cassandra\\Spark\\spark-2.0.0-bin-hadoop2.7\\bin\\demoscala.txt")
+val map = textFile.map(word => word.toUpperCase())
+map.persist()
+val rdd2 = map.filter(lines => lines.startsWith("H"))
+rdd2.count
+
+Storage Levels
+
+finalrdd.getStorageLevel
+finalrdd.persist(org.apache.spark.storage.StorageLevel.MEMORY_ONLY_2)
+finalrdd.unpersist()

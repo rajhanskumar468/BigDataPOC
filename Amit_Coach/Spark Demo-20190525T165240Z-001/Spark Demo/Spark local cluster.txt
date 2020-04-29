@@ -1,0 +1,4 @@
+Step 1: make your master up
+spark-class org.apache.spark.deploy.master.Master
+Step 2: Register your worker
+spark-class org.apache.spark.deploy.worker.Worker spark://100.96.72.132:7077
